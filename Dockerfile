@@ -9,12 +9,15 @@ ENV SO_PACKAGES="\
 
 ENV PYTHON_BASICS="\
     pandas==0.23.4\
+    cryptography==2.3.0\
 "
 
 RUN set -ex \
 	&& apk add --no-cache --update $SO_PACKAGES \
     && apk add --no-cache --virtual .build-deps \
             g++ \
+            libffi-dev \
+            openssl-dev \
     && python3.6 -m venv /venv \
     && /bin/sh -c "/venv/bin/pip install --upgrade pip setuptools" \
     && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "/venv/bin/pip install --no-cache-dir $PYTHON_BASICS" \
